@@ -24,6 +24,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Autoplay must be muted, or if user explicitly requested muted
         this.isMuted = this.autoplay || this.getAttribute('data-muted') === 'true';
 
+        // Setup IntersectionObserver for lazy loading
+        if ('IntersectionObserver' in window) {
+          this.observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                this.initComponent();
+                this.observer.disconnect();
+              }
+            });
+          }, { rootMargin: '200px' });
+          this.observer.observe(this);
+        } else {
+          // Fallback immediately if no observer support
+          this.initComponent();
+        }
+
+        // Listen for other videos playing to pause this one
+        window.addEventListener('video-slide:play', this.onGlobalPlay);
+      }
+
+      disconnectedCallback() {
+        window.removeEventListener('video-slide:play', this.onGlobalPlay);
+        if (this.observer) {
+          this.observer.disconnect();
+        }
+      }
+
+      initComponent() {
+        if (this.rendered) return;
+        this.rendered = true;
+
         this.render();
 
         this.video = this.shadowRoot?.querySelector('video');
@@ -53,13 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
             this.video?.play();
           });
         }
-
-        // Listen for other videos playing to pause this one
-        window.addEventListener('video-slide:play', this.onGlobalPlay);
-      }
-
-      disconnectedCallback() {
-        window.removeEventListener('video-slide:play', this.onGlobalPlay);
       }
 
       dispatchPlayEvent() {
