@@ -1,12 +1,33 @@
 <style>
   #shopify-block-{{ block.id }}{
-    width:100% !important;
+    width:100% ;
+  }
+  .button-wrapper-{{ block.id }}{
+    position: relative;
+    width: 300px;
+    height: 180px;
   }
 </style>
 
 <div class="button-wrapper-{{ block.id }}">
   {% content_for 'blocks' %}
 </div>
+
+<script>
+  const buttons = document.querySelectorAll('.button-wrapper-{{ block.id }}');
+
+  setInterval(() => {
+    buttons.forEach((btn) => {
+      if (btn.classList.contains('pos-1')) {
+        btn.classList.replace('pos-1', 'pos-2');
+      } else if (btn.classList.contains('pos-2')) {
+        btn.classList.replace('pos-2', 'pos-3');
+      } else {
+        btn.classList.replace('pos-3', 'pos-1');
+      }
+    });
+  }, 2000);
+</script>
 
 {% schema %}
 {

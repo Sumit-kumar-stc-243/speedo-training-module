@@ -1,19 +1,59 @@
- 
-
-<div class="custom-swiper-{{ block.id }}">
+<div class="custom-swiper-{{ block.id }} swiper" style="width: {{ block.settings.container_width }}; margin: 0 auto;">
+  <div class="swiper-wrapper">
     {% content_for 'blocks' %}
+  </div>
 </div>
-
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const swiperEl = document.querySelector('.custom-swiper-{{ block.id }}');
+    if (swiperEl && typeof Swiper !== 'undefined') {
+      new Swiper(swiperEl, {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        breakpoints: {
+          0: {
+            slidesPerView: 1,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+        },
+      });
+    } else {
+      console.warn('Swiper not loaded or element not found');
+    }
+  });
+</script>
 
 {% schema %}
 {
-    "name": "custom Swiper",
-    "settings": [],
-    "blocks": [
+  "name": "custom Swiper",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_width",
+      "label": "Container Width",
+      "options": [
         {
-            "type": "swiper-slide"
+          "value": "100%",
+          "label": "Full Width"
+        },
+        {
+          "value": "50%",
+          "label": "Half Width"
         }
-    ],
-    "presets": [{"name": "Custom Swiper"}]
+      ],
+      "default": "100%"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "swiper-slide"
+    }
+  ],
+  "presets": [{ "name": "Custom Swiper" }]
 }
 {% endschema %}

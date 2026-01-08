@@ -3,8 +3,7 @@
     background: black;
     position: relative;
     color: white;
-    height: 400px;
-    padding:120px 58px 0px 58px;
+    height: 100%;
   }
   .section-background-{{ section.id }}{
     height: 100%;
@@ -19,7 +18,7 @@
     border-bottom: none;
     height: 38px;
     width: 38px;
-    z-index: 11;
+    z-index: 6;
     top: 60px;
   }
   .border-left-{{ section.id }}{
@@ -30,7 +29,9 @@
     transform: rotate(90deg);
    }
    .section-content-{{ section.id }}{
-    display:flex;
+    display: grid;
+    grid-template-columns: minmax(50%, 1fr) minmax(50%, 1fr);
+    padding: 120px 58px 10px 58px;
    }
 </style>
 
