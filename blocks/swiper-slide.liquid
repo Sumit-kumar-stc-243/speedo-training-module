@@ -1,0 +1,99 @@
+{%- assign video_object = block.settings.video-src -%}
+{%- assign video_url = '' -%}
+{%- if video_object != blank -%}
+  {%- for source in video_object.sources -%}
+    {%- if source.format == 'mp4' -%}
+      {%- assign video_url = source.url -%}
+      {%- break -%}
+    {%- endif -%}
+  {%- endfor -%}
+  
+  {%- if video_url == blank and video_object.sources.size > 0 -%}
+      {%- assign video_url = video_object.sources[0].url -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- assign slide_poster = block.settings.poster | image_url: width: 800 -%}
+{%- if slide_poster == blank and video_object != blank -%}
+  {%- assign slide_poster = video_object.preview_image | image_url: width: 800 -%}
+{%- endif -%}
+
+<video-slide 
+    data-video-src="{{ video_url }}" 
+    data-poster="{{ slide_poster }}" 
+    data-width="{{ block.settings.width }}"
+    data-height="{{ block.settings.height }}"
+    data-autoplay="{{ block.settings.autoplay }}"
+    data-muted="{{ block.settings.muted }}"
+    data-loop="{{ block.settings.loop }}"
+    data-controls="{{ block.settings.controls }}"
+    data-heading="{{ block.settings.video-text }}"
+>
+</video-slide>
+
+
+{% schema %}
+{
+    "name": "Video Slide",
+    "settings": [
+        {
+            "id": "video-text",
+            "type": "text",
+            "label": "Video Text",
+            "default": "Video Title"
+        },
+        {
+            "id": "video-src",
+            "type": "video",
+            "label": "Video Source"
+        },
+        {
+            "id": "poster",
+            "type": "image_picker",
+            "label": "Poster Image"
+        },
+        {
+            "id": "width",
+            "type": "text",
+            "label": "Width",
+            "default": "100%"
+        },
+        {
+            "id": "height",
+            "type": "text",
+            "label": "Height",
+            "default": "auto"
+        },
+        {
+            "id": "autoplay",
+            "type": "checkbox",
+            "label": "Autoplay (Muted)",
+            "default": false,
+            "info": "Video will be muted if autoplay is enabled."
+        },
+        {
+            "id": "muted",
+            "type": "checkbox",
+            "label": "Muted",
+            "default": true
+        },
+        {
+            "id": "loop",
+            "type": "checkbox",
+            "label": "Loop",
+            "default": false
+        },
+        {
+            "id": "controls",
+            "type": "checkbox",
+            "label": "Show Controls",
+            "default": true
+        }
+    ],
+    "presets": [
+        {
+            "name": "Video Slide",
+        }
+    ]
+}
+{% endschema %}

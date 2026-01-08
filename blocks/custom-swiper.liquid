@@ -1,0 +1,19 @@
+ 
+
+<div class="custom-swiper-{{ block.id }}">
+    {% content_for 'blocks' %}
+</div>
+
+
+{% schema %}
+{
+    "name": "custom Swiper",
+    "settings": [],
+    "blocks": [
+        {
+            "type": "swiper-slide"
+        }
+    ],
+    "presets": [{"name": "Custom Swiper"}]
+}
+{% endschema %}
