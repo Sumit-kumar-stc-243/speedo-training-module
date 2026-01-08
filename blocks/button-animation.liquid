@@ -11,19 +11,18 @@
     width: 100%;
     height: 180px;
   }
-  
-  /* Apply base styles to buttons inside the wrapper */
+
   .button-wrapper-{{ block.id }} button {
     position: absolute;
     left: 50%;
     transform-origin: center;
     transition: all 0.6s ease;
     padding: 14px 20px;
-    z-index: 0;  
+    z-index: 0;
   }
 
   .button-wrapper-{{ block.id }} .pos-1 {
-    width: 100% !important;  
+    width: 100% !important;
     opacity: 1 !important;
     transform: translateX(-50%) translateY(0) rotate(0deg) !important;
     z-index: 3;
@@ -36,7 +35,7 @@
     color: transparent;
     transform: translateX(-50%) translateY(15px) rotate(0deg) !important;
     z-index: 2;
-    pointer-events: none;  
+    pointer-events: none;
   }
 
   .button-wrapper-{{ block.id }} .pos-3 {
@@ -110,7 +109,7 @@
       "type": "text",
       "id": "sec",
       "label": "Time",
-      "default":"2000"
+      "default": "2000"
     }
   ],
   "blocks": [

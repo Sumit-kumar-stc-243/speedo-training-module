@@ -1,3 +1,9 @@
+<style>
+  .swiper-slide{
+    width: {{ block.settings.width }} !important;
+  }
+</style>
+
 {%- assign video_object = block.settings['video-src'] -%}
 {%- assign video_url = '' -%}
 {%- if video_object != blank -%}
@@ -18,24 +24,23 @@
   {%- assign slide_poster = video_object.preview_image | image_url: width: 800 -%}
 {%- endif -%}
 
-<div class="swiper-slide">
-  <video-slide
-    data-video-src="{{ video_url }}"
-    data-poster="{{ slide_poster }}"
-    data-width="{{ block.settings.width }}"
-    data-height="{{ block.settings.height }}"
-    data-autoplay="{{ block.settings.autoplay }}"
-    data-muted="{{ block.settings.muted }}"
-    data-loop="{{ block.settings.loop }}"
-    data-controls="{{ block.settings.controls }}"
-    data-heading="{{ block.settings.video-text }}"
-  >
-  </video-slide>
-</div>
+<video-slide
+  data-video-src="{{ video_url }}"
+  data-poster="{{ slide_poster }}"
+  data-width="{{ block.settings.width }}"
+  data-height="{{ block.settings.height }}"
+  data-autoplay="{{ block.settings.autoplay }}"
+  data-muted="{{ block.settings.muted }}"
+  data-loop="{{ block.settings.loop }}"
+  data-controls="{{ block.settings.controls }}"
+  data-heading="{{ block.settings.video-text }}"
+>
+</video-slide>
 
 {% schema %}
 {
   "name": "Video Slide",
+  "class": "swiper-slide",
   "settings": [
     {
       "id": "video-text",

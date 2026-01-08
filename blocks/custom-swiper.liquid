@@ -1,3 +1,9 @@
+<style>
+  .custom-swiper-{{ block.id }}{
+    width: 48vw !important;
+  } 
+</style>
+
 <div class="custom-swiper-{{ block.id }} swiper" style="width: {{ block.settings.container_width }}; margin: 0 auto;">
   <div class="swiper-wrapper">
     {% content_for 'blocks' %}
@@ -8,19 +14,9 @@
     const swiperEl = document.querySelector('.custom-swiper-{{ block.id }}');
     if (swiperEl && typeof Swiper !== 'undefined') {
       new Swiper(swiperEl, {
-        slidesPerView: 3,
+        slidesPerView: 1,
         spaceBetween: 20,
-        breakpoints: {
-          0: {
-            slidesPerView: 1,
-          },
-          768: {
-            slidesPerView: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-          },
-        },
+        loop: false,
       });
     } else {
       console.warn('Swiper not loaded or element not found');
