@@ -1,38 +1,118 @@
 <style>
-  #shopify-block-{{ block.id }}{
-    width:100% ;
+  #shopify-block-{{ block.id }} {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    padding: 20px 0;
   }
-  .button-wrapper-{{ block.id }}{
+  .button-wrapper-{{ block.id }} {
     position: relative;
-    width: 300px;
+    width: 100%;
     height: 180px;
+  }
+  
+  /* Apply base styles to buttons inside the wrapper */
+  .button-wrapper-{{ block.id }} button {
+    position: absolute;
+    left: 50%;
+    transform-origin: center;
+    transition: all 0.6s ease;
+    padding: 14px 20px;
+    z-index: 0;  
+  }
+
+  .button-wrapper-{{ block.id }} .pos-1 {
+    width: 100% !important;  
+    opacity: 1 !important;
+    transform: translateX(-50%) translateY(0) rotate(0deg) !important;
+    z-index: 3;
+    pointer-events: auto;
+  }
+
+  .button-wrapper-{{ block.id }} .pos-2 {
+    width: 90% !important;
+    opacity: 0.4 !important;
+    color: transparent;
+    transform: translateX(-50%) translateY(15px) rotate(0deg) !important;
+    z-index: 2;
+    pointer-events: none;  
+  }
+
+  .button-wrapper-{{ block.id }} .pos-3 {
+    width: 80% !important;
+    color: transparent;
+    opacity: 0.15 !important;
+    transform: translateX(-50%) translateY(25px) rotate(0deg) !important;
+    z-index: 1;
+    pointer-events: none;
   }
 </style>
 
-<div class="button-wrapper-{{ block.id }}">
+<div class="button-wrapper-{{ block.id }}" id="animation-wrapper-{{ block.id }}">
   {% content_for 'blocks' %}
 </div>
 
 <script>
-  const buttons = document.querySelectorAll('.button-wrapper-{{ block.id }}');
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.getElementById('animation-wrapper-{{ block.id }}');
+    if (!wrapper) return;
 
-  setInterval(() => {
-    buttons.forEach((btn) => {
-      if (btn.classList.contains('pos-1')) {
-        btn.classList.replace('pos-1', 'pos-2');
-      } else if (btn.classList.contains('pos-2')) {
-        btn.classList.replace('pos-2', 'pos-3');
-      } else {
-        btn.classList.replace('pos-3', 'pos-1');
-      }
+    // specific selector to avoid grabbing extra things if strict
+    const buttons = wrapper.querySelectorAll('button');
+    if (buttons.length === 0) return;
+
+    // Initialize positions
+    buttons.forEach((btn, index) => {
+      const posIndex = (index % 3) + 1; 
+      btn.classList.add(`pos-${posIndex}`);
     });
-  }, 2000);
+
+    const rotateButtons = () => {
+      buttons.forEach(btn => {
+        if (btn.classList.contains('pos-1')) {
+          btn.classList.remove('pos-1');
+          btn.classList.add('pos-2');
+        } else if (btn.classList.contains('pos-2')) {
+          btn.classList.remove('pos-2');
+          btn.classList.add('pos-3');
+        } else if (btn.classList.contains('pos-3')) {
+          btn.classList.remove('pos-3');
+          btn.classList.add('pos-1');
+        }
+      });
+    };
+
+    const isAutomated = {{ block.settings.automated_animation | default: false }};
+    console.log( {{ block.settings.automated_animation | default: false }} , 'value')
+    if (isAutomated) {
+      setInterval(rotateButtons, {{ block.settings.sec | default : 2000 }});
+    } else {
+      // If not automated, rotate on click
+      wrapper.addEventListener('click', () => {
+         rotateButtons();
+      });
+    }
+  });
 </script>
 
 {% schema %}
 {
   "name": "Button Animations",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "automated_animation",
+      "label": "Automated Animation",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "sec",
+      "label": "Time",
+      "default":"2000"
+    }
+  ],
   "blocks": [
     {
       "type": "custom-button"
