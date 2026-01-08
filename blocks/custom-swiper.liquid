@@ -4,7 +4,7 @@
   } 
 </style>
 
-<div class="custom-swiper-{{ block.id }} swiper" style="width: {{ block.settings.container_width }}; margin: 0 auto;">
+<div class="custom-swiper-{{ block.id }} swiper" style="margin: 0 auto;">
   <div class="swiper-wrapper">
     {% content_for 'blocks' %}
   </div>
@@ -28,24 +28,7 @@
 {% schema %}
 {
   "name": "custom Swiper",
-  "settings": [
-    {
-      "type": "select",
-      "id": "container_width",
-      "label": "Container Width",
-      "options": [
-        {
-          "value": "100%",
-          "label": "Full Width"
-        },
-        {
-          "value": "50%",
-          "label": "Half Width"
-        }
-      ],
-      "default": "100%"
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "swiper-slide"

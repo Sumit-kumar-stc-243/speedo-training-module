@@ -55,6 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (this.rendered) return;
         this.rendered = true;
 
+        // Read dynamic styling attributes
+        this.headingAlign = this.getAttribute('data-heading-align') || 'left';
+        this.headingTop = this.getAttribute('data-heading-top') || '80'; // default 80%
+        this.headingSize = this.getAttribute('data-heading-size') || '20';
+        this.headingColor = this.getAttribute('data-heading-color') || '#ffffff';
+        this.headingWeight = this.getAttribute('data-heading-weight') || '600';
+
         this.render();
 
         this.video = this.shadowRoot?.querySelector('video');
@@ -164,12 +171,13 @@ document.addEventListener('DOMContentLoaded', () => {
       
                 .video-heading {
                   position: absolute;
-                  bottom: 20px;
+                  top: ${this.headingTop}%;
                   left: 20px;
                   right: 20px;
-                  color: #fff;
-                  font-size: 20px;
-                  font-weight: 600;
+                  color: ${this.headingColor};
+                  font-size: ${this.headingSize}px;
+                  font-weight: ${this.headingWeight};
+                  text-align: ${this.headingAlign};
                   z-index: 3;
                   pointer-events: none;
                   text-shadow: 0 2px 4px rgba(0,0,0,0.8);
