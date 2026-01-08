@@ -1,0 +1,22 @@
+<style>
+  #shopify-block-{{ block.id }}{
+    width:100% !important;
+  }
+</style>
+
+<div class="button-wrapper-{{ block.id }}">
+  {% content_for 'blocks' %}
+</div>
+
+{% schema %}
+{
+  "name": "Button Animations",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "custom-button"
+    }
+  ],
+  "presets": [{ "name": "Button Animations" }]
+}
+{% endschema %}

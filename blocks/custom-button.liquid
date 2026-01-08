@@ -1,0 +1,64 @@
+<style>
+  .{{ block.id }}{
+      width:100%;
+  }
+  .button-{{ block.id }}{
+      border-radius:{{ block.settings.border_radius }}px;
+      color: {{ block.settings.text_color }};
+      background-color:{{ block.settings.background_color }};
+      font-size: {{ block.settings.font_size }}px;
+      width:100%;
+      border:none;
+      padding:13px 0px;
+  }
+</style>
+
+<button class="button-{{ block.id }}">
+  {{ block.settings.text }}
+</button>
+
+{% schema %}
+{
+  "name": "custom-button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#fff"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font Size",
+      "min": 12,
+      "max": 60,
+      "step": 1,
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#EE3224"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 55
+    }
+  ],
+  "blocks": [],
+  "presets": [{ "name": "custom-button" }]
+}
+{% endschema %}
